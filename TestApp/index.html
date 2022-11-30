@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://cdn.spco.xyz/favicon.ico" type="image/png" sizes="16x16">
+    <title>Test App</title>
+    <style>
+        @media (prefers-color-scheme: light) {
+            body {
+                background-color: white;
+                color: black;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: black;
+                color: white;
+            }
+        }
+        body {
+            font-family: monospace;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script>
+        var os = require('os');
+        var ngapp = angular.module('myApp', []);
+        ngapp.controller('myCtrl', function($scope) {
+                $scope.appDir = nw.App.startPath;
+                $scope.arch = os.arch()
+                $scope.cpus = os.cpus()
+                $scope.endianness = os.endianness()
+                $scope.freemem = os.freemem()
+                $scope.homedir = os.homedir()
+                $scope.hostname = os.hostname()
+                $scope.loadavg = os.loadavg()
+                $scope.networkInterfaces = os.networkInterfaces()
+                $scope.platform = os.platform()
+                $scope.release = os.release()
+                $scope.tmpdir = os.tmpdir()
+                $scope.totalmem = os.totalmem()
+                $scope.type = os.type()
+                $scope.uptime = os.uptime()
+                $scope.version = os.version()
+                $scope.machine = os.machine()
+        });
+
+        function save() {
+            var fs = require('fs');
+            var data = []
+            data.push({startPath: nw.App.startPath});
+            data.push({arch: os.arch()})
+            data.push({cpus: os.cpus()})
+            data.push({endianness: os.endianness()})
+            data.push({freemem: os.freemem()})
+            data.push({homedir: os.homedir()})
+            data.push({hostname: os.hostname()})
+            data.push({loadavg: os.loadavg()})
+            data.push({networkInterfaces: os.networkInterfaces()})
+            data.push({platform: os.platform()})
+            data.push({release: os.release()})
+            data.push({tmpdir: os.tmpdir()})
+            data.push({totalmem: os.totalmem()})
+            data.push({type: os.type()})
+            data.push({uptime: os.uptime()})
+            data.push({version: os.version()})
+            data.push({machine: os.machine()})
+            fs.writeFile('data.json', JSON.stringify(data), function(err) {
+                if (err) {
+                    return console.error(err);
+                }
+                console.log("Data written successfully!");
+            });
+        }
+    </script>
+</head>
+
+<body ng-app="myApp">
+    <h1>Test App</h1>
+    <p>This is a test of the nwjs API</p>
+    <div ng-controller="myCtrl" id="data">
+        <p>App Directory: {{appDir}}</p>
+        <table>
+            <p>CPUS:</p>
+            <tr ng-repeat="x in cpus">
+                <td>{{x.model}}</td>
+                <td>{{x.speed}}</td>
+            </tr>
+        </table>
+        <p>Endianness: {{endianness}}</p>
+        <p>Freemem: {{freemem}}</p>
+        <p>GetPriority: {{getPriority}}</p>
+        <p>Homedir: {{homedir}}</p>
+        <p>Hostname: {{hostname}}</p>
+        <p>Loadavg: {{loadavg}}</p>
+        <p>NetworkInterfaces: {{networkInterfaces}}</p>
+        <p>Platform: {{platform}}</p>
+        <p>Release: {{release}}</p>
+        <p>Tmpdir: {{tmpdir}}</p>
+        <p>Totalmem: {{totalmem}}</p>
+        <p>Type: {{type}}</p>
+        <p>Uptime: {{uptime}}</p>
+        <p>Version: {{version}}</p>
+        <p>Machine: {{machine}}</p>
+        <button onclick="save()">Save</button>
+    </div>
+</body>
+
+</html>

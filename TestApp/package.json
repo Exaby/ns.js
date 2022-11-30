@@ -1,0 +1,5 @@
+{
+  "name": "testapp",
+  "main": "index.html",
+  "icon": ".\favicon.ico"
+}
